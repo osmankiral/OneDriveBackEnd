@@ -5,18 +5,15 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
-const port = 3000;
+const port = process.env.PORT || 3000;  // Heroku portunu kullan veya 3000'e geri dön
 
 // Body parser middleware
 app.use(bodyParser.json());
 
 // MongoDB connection (local or cloud)
-// mongoose.connect('mongodb+srv://cerenbaykal:CerenBaykal0619@cerenbaykaloglu.snnawac.mongodb.net', {});
-mongoose.connect('mongodb+srv://cerenbaykal:CerenBaykal0619@cerenbaykaloglu.snnawac.mongodb.net/test?ssl=true&authSource=admin&w=majority', {});
-
-
-
-
+mongoose.connect('mongodb+srv://cerenbaykal:CerenBaykal0619@cerenbaykaloglu.snnawac.mongodb.net', {
+ 
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -60,5 +57,5 @@ app.get('/api/users', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on port ${port}`);
 });
