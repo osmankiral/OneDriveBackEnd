@@ -11,7 +11,11 @@ const port = 3000;
 app.use(bodyParser.json());
 
 // MongoDB connection (local or cloud)
-mongoose.connect('mongodb+srv://cerenbaykal:CerenBaykal0619@cerenbaykaloglu.snnawac.mongodb.net', {});
+// mongoose.connect('mongodb+srv://cerenbaykal:CerenBaykal0619@cerenbaykaloglu.snnawac.mongodb.net', {});
+mongoose.connect('mongodb+srv://cerenbaykal:CerenBaykal0619@cerenbaykaloglu.mongodb.net/databaseName?retryWrites=true&w=majority&ssl=true&sslCAPath=path-to-ca-file.pem', {});
+
+
+
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
