@@ -110,12 +110,22 @@ app.delete('/api/userdata/:id', async (req, res) => {
 });
 
 // POST endpoint: Record user data
-app.post('/api/userdata', (req, res) => {
+app.post('/api/userdata', async (req, res) => {
     const { ip, browser, location } = req.body;
-    console.log('Received user data:', { ip, browser, location });
-    // Burada bu verileri kaydetmek istediğiniz yere kaydedebilirsiniz
-    res.status(200).send('User data received successfully');
+
+    try {
+        // Yeni UserData belgesi oluştur
+        const newUserData = new UserData({ ip, browser, location });
+        // Veriyi MongoDB'ye kaydet
+        await newUserData.save();
+        // Başarılı mesajı gönder
+        res.status(200).send('User data received and saved successfully');
+    } catch (error) {
+        // Hata durumunda hata mesajını gönder
+        res.status(500).send('Error saving user data');
+    }
 });
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
